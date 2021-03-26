@@ -6,6 +6,7 @@ from babel.plural import PluralRule
 
 import glob
 import json
+import os.path
 
 app = FastAPI()
 
@@ -18,8 +19,8 @@ plural_rule = PluralRule({'one': 'n in 0..1'})
 
 language_list = glob.glob("languages/*.json")
 for lang in language_list:
-    filename = lang.split('\\')
-    lang_code = filename[1].split('.')[0]
+    filename  = os.path.basename(lang)
+    lang_code, ext = os.path.splitext(filename)
 
     with open(lang, 'r', encoding='utf8') as file:
         languages[lang_code] = json.load(file)
